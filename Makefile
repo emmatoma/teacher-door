@@ -2,9 +2,9 @@ CC = gcc
 
 DEBUGFLAGS = -fdebug-prefix-map=$(CURDIR)=. -ggdb
 BASECFLAGS = -O1 -Wextra -Wall -Isrc/validation -Isrc/action
-LEGCFLAGS  = # To be filled
-LEGLDFLAGS = # To be filled
-
+LEGCFLAGS = -fstack-protector-strong -O2 -fPIC -D_FORTIFY_SOURCE=2  # Enable stack protection (canaries), position-independent code
+# Secure linker flags: full RELRO, non-executable stack, immediate symbol binding
+LEGLDFLAGS = -Wl,-z,relro -Wl,-z,now, noexecstack
 CFLAGS  = $(BASECFLAGS) $(DEBUGFLAGS) $(LEGCFLAGS)
 LDFLAGS = $(LEGLDFLAGS)
 
